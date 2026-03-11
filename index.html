@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quote Craft - 引用ポスト作成ツール</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1 class="logo">Quote Craft</h1>
+            <p class="tagline">強者にリポストされる引用を、8つのパターンで作る</p>
+        </header>
+
+        <!-- Step 1: Input -->
+        <section id="step1" class="step active">
+            <div class="step-header">
+                <span class="step-number">1</span>
+                <h2>引用したいポストを貼り付ける</h2>
+            </div>
+            <textarea id="originalPost" placeholder="引用したいポストや記事のテキストをここに貼り付けてください..."></textarea>
+            <input type="text" id="authorName" placeholder="投稿者名（任意）例：@username">
+            <button id="analyzeBtn" class="btn-primary" disabled>分析する</button>
+        </section>
+
+        <!-- Step 2: Analysis -->
+        <section id="step2" class="step hidden">
+            <div class="step-header">
+                <span class="step-number">2</span>
+                <h2>引用元を分析する</h2>
+            </div>
+            <p class="step-desc">4つの軸で引用元を読み解きます。各項目を埋めてください。</p>
+            <div class="analysis-grid">
+                <div class="analysis-card">
+                    <label>本質</label>
+                    <p class="analysis-hint">この投稿が本当に伝えたいことは？（一言で）</p>
+                    <input type="text" id="analysisEssence" placeholder="例：「教える」を捨てて「仕組みを売れ」">
+                </div>
+                <div class="analysis-card">
+                    <label>ターゲット層</label>
+                    <p class="analysis-hint">誰に向けて書かれている？誰が反応する？</p>
+                    <input type="text" id="analysisTarget" placeholder="例：サポート労働に疲弊している個人事業主">
+                </div>
+                <div class="analysis-card">
+                    <label>感情のコア</label>
+                    <p class="analysis-hint">読者のどんな感情を揺さぶっている？</p>
+                    <input type="text" id="analysisEmotion" placeholder="例：頑張ってるのに天井がある焦り">
+                </div>
+                <div class="analysis-card">
+                    <label>引用余白</label>
+                    <p class="analysis-hint">著者が書いていないが、読者が感じている部分は？</p>
+                    <input type="text" id="analysisGap" placeholder="例：自分もサポート地獄側にいると気づく瞬間">
+                </div>
+            </div>
+            <div class="btn-group">
+                <button id="backToStep1" class="btn-secondary">戻る</button>
+                <button id="toPatterns" class="btn-primary">パターンを選ぶ</button>
+            </div>
+        </section>
+
+        <!-- Step 3: Pattern Selection -->
+        <section id="step3" class="step hidden">
+            <div class="step-header">
+                <span class="step-number">3</span>
+                <h2>引用パターンを選ぶ</h2>
+            </div>
+            <p class="step-desc">8つのパターンから、この投稿に合うものを選んでください（複数可）</p>
+            <div class="patterns-grid">
+                <div class="pattern-card" data-pattern="1">
+                    <div class="pattern-num">①</div>
+                    <h3>固有名詞フック型</h3>
+                    <p class="pattern-desc">視認性の高い固有名詞を冒頭に置き、独自視点で勝負する</p>
+                    <div class="pattern-detail hidden">
+                        <p class="pattern-how"><strong>書き方：</strong>著者の記事を起点に、自分だけが出せる固有名詞（人名・ブランド名・作品名）を冒頭に配置。その固有名詞と記事の本質を接続する。</p>
+                        <p class="pattern-example"><strong>例：</strong>「サカナクション」を冒頭に置いて認知負荷の話を展開 → 162万インプ</p>
+                    </div>
+                </div>
+                <div class="pattern-card" data-pattern="2">
+                    <div class="pattern-num">②</div>
+                    <h3>違和感フック型</h3>
+                    <p class="pattern-desc">相反する言葉で読者を立ち止まらせ、ターゲットを明確にする</p>
+                    <div class="pattern-detail hidden">
+                        <p class="pattern-how"><strong>書き方：</strong>1行目に常識と矛盾する一文を置く。2行目で「〇〇な人は必読」とターゲットを絞る。脳内で思ってるけど言えないことを代弁する。</p>
+                        <p class="pattern-example"><strong>例：</strong>「サボってない人に怒りを覚える」→ 効率重視層の共感 → 176万インプ</p>
+                    </div>
+                </div>
+                <div class="pattern-card" data-pattern="3">
+                    <div class="pattern-num">③</div>
+                    <h3>ターゲット再定義型</h3>
+                    <p class="pattern-desc">元記事の対象を広げ/ずらして新しい層を引き込む</p>
+                    <div class="pattern-detail hidden">
+                        <p class="pattern-how"><strong>書き方：</strong>元記事のターゲットを「〇〇な△△は必読」と再定義。条件付けで「自分のことかも」と思わせ、元記事がリーチしていない層を引き込む。</p>
+                        <p class="pattern-example"><strong>例：</strong>「40歳を前にして」→「成長してる30代は必読」に再定義 → 27万インプ</p>
+                    </div>
+                </div>
+                <div class="pattern-card" data-pattern="4">
+                    <div class="pattern-num">④</div>
+                    <h3>本質圧縮型</h3>
+                    <p class="pattern-desc">記事の核を一言に凝縮し、サムネイルとして機能させる</p>
+                    <div class="pattern-detail hidden">
+                        <p class="pattern-how"><strong>書き方：</strong>長文記事の本質を、日常会話で使う一言に圧縮する。記事の「サムネイル」になることで、読者が「気になる、読みたい」と思う入口を作る。</p>
+                        <p class="pattern-example"><strong>例：</strong>数千文字の記事を「魚でなく魚の釣り方」に圧縮 → 33万インプ</p>
+                    </div>
+                </div>
+                <div class="pattern-card" data-pattern="5">
+                    <div class="pattern-num">⑤</div>
+                    <h3>映像化型</h3>
+                    <p class="pattern-desc">抽象的な概念を具体的な映像・シーンに翻訳する</p>
+                    <div class="pattern-detail hidden">
+                        <p class="pattern-how"><strong>書き方：</strong>元記事の抽象概念を、具体的な場面・人物に置き換える。固有名詞を軸にしつつ、通説に逆らう否定を入れてギャップを作る。</p>
+                        <p class="pattern-example"><strong>例：</strong>「言語化力」を「ヤンキーに授業を受けさせる」場面に翻訳 → 62万インプ</p>
+                    </div>
+                </div>
+                <div class="pattern-card" data-pattern="6">
+                    <div class="pattern-num">⑥</div>
+                    <h3>情景描写型</h3>
+                    <p class="pattern-desc">動詞で情景を描き、読者の記憶を呼び起こす</p>
+                    <div class="pattern-detail hidden">
+                        <p class="pattern-how"><strong>書き方：</strong>形容詞（感動した、共感した）ではなく動詞で描写する。読者の脳内に映像が再生される一文を書く。自分の体験を情景として重ねる。</p>
+                        <p class="pattern-example"><strong>例：</strong>「3分ほど集団の中にいる子供を観察してます」→ 保育園の情景 → DMで「泣きそうになった」</p>
+                    </div>
+                </div>
+                <div class="pattern-card" data-pattern="7">
+                    <div class="pattern-num">⑦</div>
+                    <h3>比喩型</h3>
+                    <p class="pattern-desc">日常的なものに喩えて敬意と親しみを同時に表現する</p>
+                    <div class="pattern-detail hidden">
+                        <p class="pattern-how"><strong>書き方：</strong>「〇〇さんのポストは△△」という大喜利フォーマット。日常的で誰もが知るものに喩え、敬意と親しみを両立。読者も参加したくなる形に。</p>
+                        <p class="pattern-example"><strong>例：</strong>「規格外さんのポストは味の素」→ 本人から「引用のお手本」と評価</p>
+                    </div>
+                </div>
+                <div class="pattern-card" data-pattern="8">
+                    <div class="pattern-num">⑧</div>
+                    <h3>著者代弁型</h3>
+                    <p class="pattern-desc">著者が直接言えないことを仮説として代弁する</p>
+                    <div class="pattern-detail hidden">
+                        <p class="pattern-how"><strong>書き方：</strong>著者の思想パターンを理解した上で、著者が言いたいけど立場上言えないことを代弁。違和感あるフックで始め、本質をやや尖らせて書く。</p>
+                        <p class="pattern-example"><strong>例：</strong>著者の動画から思想を読み取り批判的スタンスを代弁 → 本人リポスト → 14万インプ</p>
+                    </div>
+                </div>
+            </div>
+            <div class="btn-group">
+                <button id="backToStep2" class="btn-secondary">戻る</button>
+                <button id="toCraft" class="btn-primary" disabled>引用を書く</button>
+            </div>
+        </section>
+
+        <!-- Step 4: Craft -->
+        <section id="step4" class="step hidden">
+            <div class="step-header">
+                <span class="step-number">4</span>
+                <h2>引用ポストを書く</h2>
+            </div>
+            <div id="craftArea">
+                <!-- Dynamically populated based on selected patterns -->
+            </div>
+            <div class="btn-group">
+                <button id="backToStep3" class="btn-secondary">戻る</button>
+                <button id="resetAll" class="btn-accent">最初からやり直す</button>
+            </div>
+        </section>
+
+        <!-- Rules Sidebar (always visible) -->
+        <aside id="rulesSidebar" class="rules-sidebar hidden">
+            <h3>引用の掟</h3>
+            <div class="rule rule-do">
+                <h4>必須</h4>
+                <ul>
+                    <li>引用元への敬意を込める</li>
+                    <li>独自の視点・体験を含める</li>
+                    <li>読者に考える余白を残す</li>
+                    <li>動詞で描写する</li>
+                    <li>1行目で止める（フック）</li>
+                </ul>
+            </div>
+            <div class="rule rule-dont">
+                <h4>禁止</h4>
+                <ul>
+                    <li>「すごい！」「同意！」だけの薄い引用</li>
+                    <li>説明しすぎ（3書いて7は委ねる）</li>
+                    <li>形容詞で感想（「感動した」「共感した」）</li>
+                    <li>AI定型表現</li>
+                </ul>
+            </div>
+            <div class="rule rule-principle">
+                <h4>原則</h4>
+                <p>元記事の力を借りて、さらに広げて返す。引用した側にも価値が宿る内容に。</p>
+            </div>
+        </aside>
+
+        <footer>
+            <p>Based on <a href="https://x.com/godai_ceo/status/2027903887395758511" target="_blank">@godai_ceo の引用講座</a></p>
+        </footer>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
